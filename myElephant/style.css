@@ -1,0 +1,48 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+nav{
+    background-color: lightcyan;
+}
+#Hero{
+    border: 2px solid tomato;
+    background-color: lightblue;
+    margin: 0 10 0 10 ;
+    padding: 10px;
+
+}
+#Hero h1{
+    color: rgb(185, 116, 69);
+    text-align: center;
+    
+}
+#logo{
+    height: 100px;
+    width: 160px;
+}
+.inputs{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.inputs input{
+    
+    border-radius: 4px;
+    height: 35px;
+    width: 300px;
+}
+.inputs h5{
+    color: midnightblue;
+    margin-left: 130px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+#btn {
+    height: 35px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: navajowhite;
+}
+btn:hover{
+    color: rgb(red, green, blue);
+}

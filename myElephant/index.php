@@ -40,9 +40,12 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
     ]; 
 
     function Cal($tranche){
-        echo "hello dfdfd" ;
+        // die ;
+        global $consumption ;
+        global $TTCcalibre ;
+        global $newIndex ;
+        global $oldIndex ;
         $Bill1 = $consumption ;
-       
         $MHT1 = $Bill1 * $tranche ;  // the obly parametres that changes is the tranche-->TARIF
         echo "MHT1".$MHT1 ;
         $TTC1 = $MHT1*TVA ;                 // so a function 
@@ -51,20 +54,18 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
         $HTtotal = $MHT1 + $Tarifs ;
         $totalBill = $HTtotal + $TTCtotal ;
         echo "<hr>" ;
-        echo "this is the fdhfdj".$totalBill ;
-        echo "this is the sixth ".$totalBill ;
+        echo "this is the total ".$totalBill ;
     }
-    // echo "<hr>" ;
-    // echo "this is the highest ".$TarifsKwh[0]->highest ;
-    // echo "<hr>" ;
-    // die ;
+    Cal(20);
     if($consumption > 0){
-         if($consumption<= $TarifsKwh[0]->highest){
-            //  Cal($TarifsKwh[0]->Tarif) ;
-             $Bill1 = $consumption ;
-             $MHT1 = $Bill1 * $TarifsKwh[0]->Tarif ;
-             $TTC1 = $MHT1*TVA ;
-             echo "heloo" ;
+         if($consumption <= $TarifsKwh[0]->highest){
+             echo "hi" ;
+             Cal($TarifsKwh[0]->Tarif) ;
+
+            //  $Bill1 = $consumption ;
+            //  $MHT1 = $Bill1 * $TarifsKwh[0]->Tarif ;
+            //  $TTC1 = $MHT1*TVA ;
+            //  echo "heloo" ;
         }
         elseif($consumption>= $TarifsKwh[1]->lowest && $consumption< $TarifsKwh[1]->highest){
             $Bill1 = $TarifsKwh[0]->highest ;
@@ -112,13 +113,8 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
         echo "this is the fifth ".$totalBill ;
     }
     elseif( $consumption > $TarifsKwh[5]->lowest){
-       
-        Cal($TarifsKwh[5]->Tarif) ;
-        
+        Cal($TarifsKwh[5]->Tarif);
     }
-
-
-
     // $totalTva = $TTC1 + $TTC2 + $TTCcalibre ;
     // // echo "total tva =>  ".$totalTva ;
     // $HTtotal = $MHT1 + $MHT2 + $Tarifs ;
@@ -137,7 +133,6 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
     // $HTtotal = $MHT1 + $Tarifs ;
     // $totalBill = $HTtotal + $TTCtotal ;
     // echo "this is the sixth ".$totalBill ;
-
 }}
 ?>
 

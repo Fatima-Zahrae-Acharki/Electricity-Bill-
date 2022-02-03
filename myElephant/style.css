@@ -26,7 +26,7 @@ nav{
     display: grid;
     grid-template-columns: repeat(3,1fr);
 }
-.inputs input{
+.inputs input, select{
     
     border-radius: 4px;
     height: 35px;
@@ -41,8 +41,9 @@ nav{
     height: 35px;
     width: 100px;
     border-radius: 5px;
-    background-color: navajowhite;
+    background-color: navajowhite ;
+    border-style: none;
 }
-btn:hover{
-    color: rgb(red, green, blue);
+#btn:hover{
+    background-color: rgb(80, 123, 150);
 }

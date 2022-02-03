@@ -8,7 +8,7 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
     define("TVA", 0.14);
     define("Stamp", 0.45);
     global $TTC1 ,$TTC2 , $TTCcalibre ,$MHT1,$MHT2,$totalBill ;
-    // $Tarifs here tales only one value, it literaly depends on the $calibre type. After we can count the $TTCcalibre .
+    // $Tarifs here tales only one value, it literally depends on the $calibre type. After we can count the $TTCcalibre .
     if($calibre == "5-10") $Tarifs = 22.65 ;
     elseif($calibre == "15-20") $Tarifs = 37.05 ;
     else $Tarifs =46.20 ;
@@ -35,7 +35,7 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
     // my funcyion Cal() does all the electricity bill count .
         function Cal($tranche){
             // die ;
-            global $consumption , $TTCcalibre , $newIndex , $oldIndex , $Tarifs ;
+            global $consumption , $TTCcalibre , $newIndex , $oldIndex , $Tarifs , $TTCtotal, $HTtotal,  $totalTva ,$totalBill , $Bill1 , $Bill2 ;
             $Bill1 = $consumption ;
             $MHT1 = $Bill1 * $tranche ;  
             $TTC1 = $MHT1*TVA ;                 
@@ -117,9 +117,110 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
                     
             </form>
             
-            <table class="table table-bordered" >
-                <?php  if(isset($_POST["submit"]))
+            <table class="table table-bordered border-dark" >
+                <?php  if(isset($_POST["submit"])){
                 ?>
+                      <?php
+                            }
+                        ?>
+                    <br><br>
+                    <tr>
+                        <th >NEW INDEX : <?php echo $newIndex ?></th>
+                        <th>OLD INDEX : <?php echo $oldIndex ?></th>
+                        <th>CONSUMPTION : <?php echo $consumption ?> kwh</th> 
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BILL / مفوتر</td>
+                        <td>TARIFS kwh / س.و</td>
+                        <td>MHT / المبلغ د.إ.ر</td>
+                        <td>TVA / ض.ق.م </td>
+                        <td>TTC / مبلغ الرسوم</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td> consumption </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>إستھلاك الكھرباء</td>
+                    </tr>
+                    <tr>
+                        <td> portion </td>
+                        <td><?php echo $Bill1 ?></td>
+                        <td><?php echo $TarifsKwh[0]->Tarif ?></td>
+                        <td><?php echo $MHT1 ?></td>
+                        <td><?php echo TVA ; ?></td>
+                        <td><?php echo $TTC1 ?></td>
+                        <td>الشطر </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><?php echo $Bill2 ?></td>
+                        <td><?php echo $TarifsKwh[1]->Tarif ?></td>
+                        <td><?php echo $MHT2 ; ?></td>
+                        <td><?php echo TVA ; ?></td>
+                        <td><?php echo $TTC2 ?></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        
+                        <td>fees</td>
+                        <td></td>
+                        <td></td>
+                        <td><?php echo $Tarifs ?></td>
+                        <td><?php echo TVA ; ?></td>
+                        <td><?php echo $TTCcalibre ?></td>
+                        <td> إثاوة ثابتة الكھرباء</td>
+                    </tr>
+                    <tr>
+                        <td> taxes </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td> الرسوم المؤداة لفائدة الدولة</td>
+                    </tr>
+                    <tr>
+                        <td> tva total </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td> <?php echo $totalTva ?></td>      
+                        <td> مجموع ض.ق.م </td>
+                    </tr>
+                    <tr>
+                        <td> stamp </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><?php echo Stamp ; ?></td>
+                        <td>الطابع</td>
+                    </tr>
+                    <tr>
+                        <td> subtotal </td>
+                        <td></td>
+                        <td></td>
+                        <td><?php echo $HTtotal; ?></td>
+                        <td></td>
+                        <td><?php echo $TTCtotal;  ?></td>
+                        <td> المجموع الجزئي </td>
+                    </tr>
+                    <tr>
+                        <td> total bill </td>
+                        <td></td>
+                        <td></td>
+                        <td><?php echo $totalBill; ?></td>
+                        <td></td>
+                        <td></td>
+                        <td>مجموع الكھرباء </td>
+                    </tr>
+               
 
             </table>
             

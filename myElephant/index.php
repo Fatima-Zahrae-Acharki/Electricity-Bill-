@@ -1,11 +1,4 @@
-<!--
-    consumption === consomation 
-    portion 1 === Tranche1
-    portion2 === Tranche 2 
-    stamp === timbre
-    min == low
-    high == max
--->
+
 <?php 
 if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex") && isset($_POST["calibreType"])){
     $newIndex = $_POST["newIndex"] ;
@@ -15,6 +8,7 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
     define("TVA", 0.14);
     define("Stamp", 0.45);
     global $TTC1 ,$TTC2 , $TTCcalibre ,$MHT1,$MHT2,$totalBill ;
+    // $Tarifs here tales only one value, it literaly depends on the $calibre type. After we can count the $TTCcalibre .
     if($calibre == "5-10") $Tarifs = 22.65 ;
     elseif($calibre == "15-20") $Tarifs = 37.05 ;
     else $Tarifs =46.20 ;
@@ -38,104 +32,51 @@ if(filter_has_var(INPUT_POST,"newIndex") && filter_has_var(INPUT_POST,"oldIndex"
          new Tranche(311 ,510,1.0489) , 
          new Tranche(511, null ,1.0489) 
     ]; 
-
-    function Cal($tranche){
-        // die ;
-        global $consumption ;
-        global $TTCcalibre ;
-        global $newIndex ;
-        global $oldIndex ;
-        $Bill1 = $consumption ;
-        $MHT1 = $Bill1 * $tranche ;  // the obly parametres that changes is the tranche-->TARIF
-        echo "MHT1".$MHT1 ;
-        $TTC1 = $MHT1*TVA ;                 // so a function 
-        $totalTva = $TTC1 + $TTCcalibre ;
-        $TTCtotal = $totalTva + Stamp ;
-        $HTtotal = $MHT1 + $Tarifs ;
-        $totalBill = $HTtotal + $TTCtotal ;
-        echo "<hr>" ;
-        echo "this is the total ".$totalBill ;
-    }
-    Cal(20);
-    if($consumption > 0){
-         if($consumption <= $TarifsKwh[0]->highest){
-             echo "hi" ;
-             Cal($TarifsKwh[0]->Tarif) ;
-
-            //  $Bill1 = $consumption ;
-            //  $MHT1 = $Bill1 * $TarifsKwh[0]->Tarif ;
-            //  $TTC1 = $MHT1*TVA ;
-            //  echo "heloo" ;
-        }
-        elseif($consumption>= $TarifsKwh[1]->lowest && $consumption< $TarifsKwh[1]->highest){
-            $Bill1 = $TarifsKwh[0]->highest ;
-            $MHT1 =  $TarifsKwh[0]->highest * $TarifsKwh[0]->Tarif;
-            $TTC1 = $MHT1*TVA ;
-
-            $Bill2 = $consumption - $TarifsKwh[0]->highest; 
-            $MHT2 = $Bill2 * $TarifsKwh[1]->Tarif ;
-            $TTC2 = $MHT2*TVA ;
-
-            $totalTva = $TTC1 + $TTC2 + $TTCcalibre ;
-            $HTtotal = $MHT1 + $MHT2 + $Tarifs ;
-            $TTCtotal = $totalTva + Stamp ;
-            $totalBill = $HTtotal + $TTCtotal ;
-            // echo $totalBill ;
-        }
-        elseif($consumption >= $TarifsKwh[2]->lowest && $consumption <=  $TarifsKwh[2]->highest){
+    // my funcyion Cal() does all the electricity bill count .
+        function Cal($tranche){
+            // die ;
+            global $consumption , $TTCcalibre , $newIndex , $oldIndex , $Tarifs ;
             $Bill1 = $consumption ;
-            $MHT1 = $Bill1 *  $TarifsKwh[2]->Tarif ;
-            $TTC1 = $MHT1*TVA ;
+            $MHT1 = $Bill1 * $tranche ;  
+            $TTC1 = $MHT1*TVA ;                 
             $totalTva = $TTC1 + $TTCcalibre ;
             $TTCtotal = $totalTva + Stamp ;
             $HTtotal = $MHT1 + $Tarifs ;
             $totalBill = $HTtotal + $TTCtotal ;
-            echo "this is the third ".$totalBill ;
-       }
-       elseif($consumption >=  $TarifsKwh[3]->lowest && $consumption <=  $TarifsKwh[3]->highest){
-        $Bill1 = $consumption ;
-        $MHT1 = $Bill1 *  $TarifsKwh[3]->Tarif ;
-        $TTC1 = $MHT1*TVA ;
-        $totalTva = $TTC1 + $TTCcalibre ;
-        $TTCtotal = $totalTva + Stamp ;
-        $HTtotal = $MHT1 + $Tarifs ;
-        $totalBill = $HTtotal + $TTCtotal ;
-        echo "this is the fourth ".$totalBill ;
-     }
-     elseif($consumption >=  $TarifsKwh[4]->lowest && $consumption <=  $TarifsKwh[4]->highest){
-        $Bill1 = $consumption ;
-        $MHT1 = $Bill1 * $TarifsKwh[4]->Tarif ;
-        $TTC1 = $MHT1*TVA ;
-        $totalTva = $TTC1 + $TTCcalibre ;
-        $TTCtotal = $totalTva + Stamp ;
-        $HTtotal = $MHT1 + $Tarifs ;
-        $totalBill = $HTtotal + $TTCtotal ;
-        echo "this is the fifth ".$totalBill ;
-    }
-    elseif( $consumption > $TarifsKwh[5]->lowest){
-        Cal($TarifsKwh[5]->Tarif);
-    }
-    // $totalTva = $TTC1 + $TTC2 + $TTCcalibre ;
-    // // echo "total tva =>  ".$totalTva ;
-    // $HTtotal = $MHT1 + $MHT2 + $Tarifs ;
-    // echo $HTtotal ;
-    // $TTCtotal = $totalTva + Stamp ;
-    // echo "<hr>" ;
-    // echo $TTCtotal ;
-    // $totalBill = $HTtotal + $TTCtotal ;
-    // echo "<hr>";
-    // echo $totalBill;
-    // $Bill1 = $consumption ;
-    // $MHT1 = $Bill1 * $Tranche5->Tarif ; // the obly parametres that changes is the tranche-->TARIF
-    // $TTC1 = $MHT1*TVA ;                 // so a function 
-    // $totalTva = $TTC1 + $TTCcalibre ;
-    // $TTCtotal = $totalTva + Stamp ;
-    // $HTtotal = $MHT1 + $Tarifs ;
-    // $totalBill = $HTtotal + $TTCtotal ;
-    // echo "this is the sixth ".$totalBill ;
-}}
-?>
+            echo "<hr>" ;
+            echo "fucntions works, total Bill ==> ".$totalBill ;
+        }
+        if($consumption > 0){
+            if($consumption <= $TarifsKwh[0]->highest){
+                Cal($TarifsKwh[0]->Tarif) ;
+            }
+            elseif($consumption>= $TarifsKwh[1]->lowest && $consumption< $TarifsKwh[1]->highest){
+                $Bill1 = $TarifsKwh[0]->highest ;
+                $MHT1 = $Bill1 * $TarifsKwh[0]->Tarif;
+                $TTC1 = $MHT1*TVA ;
 
+                $Bill2 = $consumption - $TarifsKwh[0]->highest; 
+                $MHT2 = $Bill2 * $TarifsKwh[1]->Tarif ;
+                $TTC2 = $MHT2*TVA ;
+                $totalTva = $TTC1 + $TTC2 + $TTCcalibre ;
+                $HTtotal = $MHT1 + $MHT2 + $Tarifs ;
+                $TTCtotal = $totalTva + Stamp ;
+                $totalBill = $HTtotal + $TTCtotal ;
+            }
+             elseif($consumption >= $TarifsKwh[2]->lowest && $consumption <=  $TarifsKwh[2]->highest){
+                Cal($TarifsKwh[2]->Tarif) ;
+            }
+            elseif($consumption >=  $TarifsKwh[3]->lowest && $consumption <=  $TarifsKwh[3]->highest){
+            Cal($TarifsKwh[3]->Tarif) ;
+            }
+            elseif($consumption >=  $TarifsKwh[4]->lowest && $consumption <=  $TarifsKwh[4]->highest){
+            Cal($TarifsKwh[4]->Tarif) ;
+            }
+            else{
+            Cal($TarifsKwh[5]->Tarif);
+            }
+    }}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
